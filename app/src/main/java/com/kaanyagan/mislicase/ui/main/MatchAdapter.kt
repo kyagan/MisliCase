@@ -1,11 +1,11 @@
 package com.kaanyagan.mislicase.ui.main
 
 import android.content.Context
-import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.kaanyagan.mislicase.data.api.model.Data
 import com.kaanyagan.mislicase.databinding.MatchListItemBinding
 
 class MatchAdapter(private val context: Context, private val matches:List<Data>): RecyclerView.Adapter<MatchAdapter.MyViewHolder>() {
