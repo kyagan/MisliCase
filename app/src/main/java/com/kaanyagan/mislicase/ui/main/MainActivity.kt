@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.kaanyagan.mislicase.R
 import com.kaanyagan.mislicase.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel:MainViewModel by viewModels()
