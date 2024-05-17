@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white" >
+    tools:context=".ui.detail.DetailActivity">
 
     <TextView
         android:id="@+id/tvHtName"
@@ -46,10 +46,5 @@
         app:layout_constraintStart_toEndOf="@+id/tvScore"
         app:layout_constraintTop_toTopOf="@+id/tvScore" />
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey"
-        app:layout_constraintTop_toBottomOf="@+id/tvScore" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
