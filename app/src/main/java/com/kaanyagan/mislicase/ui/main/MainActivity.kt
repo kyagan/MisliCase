@@ -2,11 +2,13 @@ package com.kaanyagan.mislicase.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.kaanyagan.mislicase.R
 import com.kaanyagan.mislicase.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel:MainViewModel by viewModels()
     private lateinit var binding:ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.getAllMatches()
 
     }
 }
