@@ -3,9 +3,17 @@ package com.kaanyagan.mislicase.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
 import com.kaanyagan.mislicase.R
+import com.kaanyagan.mislicase.data.state.MatchListState
 import com.kaanyagan.mislicase.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -20,5 +28,37 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getAllMatches()
 
+        observeMatchListState()
+
+    }
+
+    private fun observeMatchListState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.matchListState.collect{
+                    when(it){
+                        is MatchListState.Idle->{}
+                        is MatchListState.Loading->{
+                            binding.rvMatch.isVisible = false
+                            binding.progressBar.isVisible = true
+                        }
+                        is MatchListState.Empty->{
+                            binding.progressBar.isVisible = false
+                            binding.tvEl.isVisible = true
+                        }
+                        is MatchListState.Result->{
+                            binding.rvMatch.isVisible = true
+                            binding.progressBar.isVisible = false
+                            binding.rvMatch.adapter = MatchAdapter(this@MainActivity, it.matches)
+                        }
+                        is MatchListState.Error->{
+                            binding.rvMatch.isVisible = false
+                            binding.progressBar.isVisible = false
+                            Snackbar.make(binding.rvMatch,getString(R.string.error), Snackbar.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
