@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivFavorite"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
         android:background="@drawable/ic_unfav"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +23,7 @@
         android:textSize="16sp"
         android:maxLines="1"
         android:ellipsize="end"
+        app:layout_constraintLeft_toRightOf="@id/ivFavorite"
         app:layout_constraintBottom_toBottomOf="@+id/tvScore"
         app:layout_constraintEnd_toStartOf="@+id/tvScore"
         app:layout_constraintTop_toTopOf="@+id/tvScore" />
@@ -50,10 +51,20 @@
         android:textSize="16sp"
         android:maxLines="1"
         android:ellipsize="end"
+        app:layout_constraintRight_toLeftOf="@id/tvMatchStatus"
         app:layout_constraintBottom_toBottomOf="@+id/tvScore"
         app:layout_constraintStart_toEndOf="@+id/tvScore"
         app:layout_constraintTop_toTopOf="@+id/tvScore" />
 
+    <TextView
+        android:id="@+id/tvMatchStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
