@@ -25,11 +25,12 @@ class MatchAdapter(
         val tvHtName = binding.tvHtName
         val tvScore = binding.tvScore
         val tvAtName = binding.tvAtName
-
+        val ivFavorite = binding.ivFavorite
+        val tvMatchStatus = binding.tvMatchStatus
     }
 
     class LeagueViewHolder(binding: LeagueListItemBinding):ViewHolder(binding.root){
-        val tvHeader = binding.headerTitle
+        val tvLeagueName = binding.tvLeagueName
         val ivFlag = binding.ivFlag
     }
 
@@ -56,6 +57,7 @@ class MatchAdapter(
                 holder.tvHtName.text = data.ht.sn
                 holder.tvAtName.text = data.at.sn
                 holder.tvScore.text = data.sc.ht.r.toString() + " - " + data.sc.at.r.toString()
+                holder.tvMatchStatus.text = data.sc.abbr
                 holder.itemView.setOnClickListener {
                     onClick(data,position)
                 }
@@ -67,7 +69,7 @@ class MatchAdapter(
             }
             else{
                 holder as LeagueViewHolder
-                holder.tvHeader.text = this.data.to.n
+                holder.tvLeagueName.text = this.data.to.n
                 holder.ivFlag.load(data.to.flag)
             }
         }
