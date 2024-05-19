@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
+//The model used for the "data" attribute in the api
 @Parcelize
 data class Data(
     val i: Int,

@@ -31,9 +31,13 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initial all leagues and matches
         viewModel.getAllLeaguesAndMatches()
+        // Observes changes in the league and match list state
         observeLeagueAndMatchListState()
+        // Observes changes in the add or remove favorite state
         observeAddOrRemoveFavoriteState()
+        // Observes changes in the favorite message state
         observeFavoriteMessageState()
     }
 
@@ -52,6 +56,7 @@ class MainActivity: AppCompatActivity() {
                         is FavoriteMessageState.Error->{
                             Toast.makeText(this@MainActivity,getString(R.string.removed_favorite),Toast.LENGTH_SHORT).show()
                         }
+                        else->{}
                     }
                 }
             }
@@ -65,16 +70,20 @@ class MainActivity: AppCompatActivity() {
                     when(it){
                         is LeagueAndMatchListState.Idle->{}
                         is LeagueAndMatchListState.Loading->{
+                            // In the loading state, the recyclerview is not visible, only the progress bar is visible
                             binding.rvMatch.isVisible = false
                             binding.progressBar.isVisible = true
                         }
                         is LeagueAndMatchListState.Empty->{
+                            // In the loading state, the recyclerview and progress bar is not visible, only the empty list textView is visible
                             binding.progressBar.isVisible = false
                             binding.tvEl.isVisible = true
                         }
                         is LeagueAndMatchListState.Result->{
+                            // In the loading state, the recyclerview is visible, progress bar is not visible
                             binding.rvMatch.isVisible = true
                             binding.progressBar.isVisible = false
+                            // Adapter assigment, intent for click event to match detail activity
                             adapter = LeagueAndMatchAdapter(this@MainActivity, it.matches , this@MainActivity::onFavClick){ match, position->
                                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
                                 intent.putExtra("match_detail",match as Parcelable)
@@ -83,16 +92,19 @@ class MainActivity: AppCompatActivity() {
                             binding.rvMatch.adapter = adapter
                         }
                         is LeagueAndMatchListState.Error->{
+                            // Displays message for error
                             binding.rvMatch.isVisible = false
                             binding.progressBar.isVisible = false
                             Snackbar.make(binding.rvMatch,getString(R.string.error), Snackbar.LENGTH_LONG).show()
                         }
+                        else->{}
                     }
                 }
             }
         }
     }
 
+    // Handles click events on the favorite icon in the adapter
     private fun onFavClick(matchId: Int, position: Int) {
         viewModel.addOrRemoveFavorite(matchId,position)
     }

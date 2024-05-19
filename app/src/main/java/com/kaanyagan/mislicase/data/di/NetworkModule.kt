@@ -9,18 +9,20 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+// Module for providing network-related dependencies using Dagger Hilt
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    // Provides the Retrofit instance
     @Provides
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_API_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-
+    // Provides the LeagueAndMatchService instance
     @Provides
-    fun provideMatchService(retrofit: Retrofit): LeagueAndMatchService = retrofit.create(LeagueAndMatchService::class.java)
+    fun provideLeagueAndMatchService(retrofit: Retrofit): LeagueAndMatchService = retrofit.create(LeagueAndMatchService::class.java)
 
 }
