@@ -13,8 +13,8 @@ class FavoriteRepositoryImpl @Inject constructor(
         return favoriteDao.addFavorite(favorite)
     }
 
-    override suspend fun deleteFavorite(matchId: Int) {
-        return favoriteDao.deleteFavorite(matchId)
+    override suspend fun removeFavorite(matchId: Int) {
+        return favoriteDao.removeFavorite(matchId)
     }
 
     override suspend fun isMatchFavorite(dataId: Int): Boolean {

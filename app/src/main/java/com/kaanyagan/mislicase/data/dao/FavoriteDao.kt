@@ -15,6 +15,6 @@ interface FavoriteDao {
     suspend fun checkFavorite(matchId: Int): Boolean
 
     @Query("delete from favorite where matchId = :i")
-    suspend fun deleteFavorite(i:Int)
+    suspend fun removeFavorite(i:Int)
 
 }

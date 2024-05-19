@@ -53,7 +53,7 @@ class MainViewModel @Inject constructor(
                 var isFavorite = false
                 if(favoriteRepository.isMatchFavorite(i))
                 {
-                    favoriteRepository.deleteFavorite(i)
+                    favoriteRepository.removeFavorite(i)
                     _favoriteMessage.value = FavoriteMessageState.Removed
                 }
                 else{
