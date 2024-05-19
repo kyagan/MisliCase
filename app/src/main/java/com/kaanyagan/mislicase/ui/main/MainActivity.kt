@@ -93,8 +93,8 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    private fun onFavClick(i: Int, position: Int) {
-        viewModel.addOrRemoveFavorite(i,position)
+    private fun onFavClick(matchId: Int, position: Int) {
+        viewModel.addOrRemoveFavorite(matchId,position)
     }
 
     private fun observeAddOrRemoveFavoriteState() {

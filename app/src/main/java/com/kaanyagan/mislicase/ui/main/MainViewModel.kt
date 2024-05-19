@@ -47,18 +47,18 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun addOrRemoveFavorite(i:Int,position:Int) {
+    fun addOrRemoveFavorite(matchId:Int,position:Int) {
         viewModelScope.launch {
             runCatching {
                 var isFavorite = false
-                if(favoriteRepository.isMatchFavorite(i))
+                if(favoriteRepository.isMatchFavorite(matchId))
                 {
-                    favoriteRepository.removeFavorite(i)
+                    favoriteRepository.removeFavorite(matchId)
                     _favoriteMessage.value = FavoriteMessageState.Removed
                 }
                 else{
                     isFavorite = true
-                    val favorite = Favorite(matchId = i)
+                    val favorite = Favorite(matchId = matchId)
                     favoriteRepository.addFavorite(favorite)
                     _favoriteMessage.value = FavoriteMessageState.Added
                 }
