@@ -11,10 +11,10 @@ interface FavoriteDao {
     @Insert
     suspend fun addFavorite(favorite: Favorite)
 
-    @Query("select count(*) from favorite where i =:i")
-    suspend fun checkFavorite(i: Int): Int
+    @Query("select exists(select 1 from favorite where matchId =:matchId)")
+    suspend fun checkFavorite(matchId: Int): Boolean
 
-    @Query("delete from favorite where i = :i")
+    @Query("delete from favorite where matchId = :i")
     suspend fun deleteFavorite(i:Int)
 
 }

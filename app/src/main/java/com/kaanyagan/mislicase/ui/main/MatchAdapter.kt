@@ -54,6 +54,14 @@ class MatchAdapter(
         with(matches[position]){
             if(listItemType == ListItemType.MATCH){
                 holder as MatchViewHolder
+
+                if (isFavorite){
+                    holder.ivFavorite.setImageResource(R.drawable.ic_fav)
+                }
+                else{
+                    holder.ivFavorite.setImageResource(R.drawable.ic_unfav)
+                }
+
                 holder.tvHtName.text = data.ht.sn
                 holder.tvAtName.text = data.at.sn
                 holder.tvScore.text = data.sc.ht.r.toString() + " - " + data.sc.at.r.toString()
@@ -61,7 +69,6 @@ class MatchAdapter(
                 holder.itemView.setOnClickListener {
                     onClick(data,position)
                 }
-                holder.ivFavorite.setImageResource(R.drawable.ic_unfav)
                 holder.ivFavorite.setOnClickListener {
                     onFavClick(data.i)
                     return@setOnClickListener

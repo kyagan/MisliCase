@@ -59,7 +59,6 @@ class MainActivity: AppCompatActivity() {
                                 startActivity(intent)
                             }
                             binding.rvMatch.adapter = adapter
-                            //binding.rvMatch.adapter = MatchAdapter(this@MainActivity, it.matches)
                         }
                         is MatchListState.Error->{
                             binding.rvMatch.isVisible = false

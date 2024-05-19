@@ -38,7 +38,6 @@ class MainViewModel @Inject constructor(
                     _matchListState.value = MatchListState.Empty
                 }
                 else {
-                    //matches.forEach { checkFavorite(it.i) }
                     _matchListState.value = MatchListState.Result(matches)
                 }
             }.onFailure {
@@ -51,14 +50,14 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 _favoriteAddOrRemoveState.value = FavoriteAddOrRemoveState.Loading
-                if(favoriteRepository.checkFavorite(i)>0)
+                if(favoriteRepository.isMatchFavorite(i))
                 {
                     favoriteRepository.deleteFavorite(i)
                     _favoriteAddOrRemoveState.value = FavoriteAddOrRemoveState.Remove
                     _favoriteAddOrRemoveState.value = FavoriteAddOrRemoveState.Idle
                 }
                 else{
-                    val favorite = Favorite(matchId = 0, i=i)
+                    val favorite = Favorite(matchId = i)
                     favoriteRepository.addFavorite(favorite)
                     _favoriteAddOrRemoveState.value = FavoriteAddOrRemoveState.Add
                     _favoriteAddOrRemoveState.value = FavoriteAddOrRemoveState.Idle

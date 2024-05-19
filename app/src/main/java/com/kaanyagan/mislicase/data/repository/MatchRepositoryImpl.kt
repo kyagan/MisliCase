@@ -7,7 +7,8 @@ import com.kaanyagan.mislicase.data.api.service.MatchService
 import javax.inject.Inject
 
 class MatchRepositoryImpl @Inject constructor(
-    private val matchService: MatchService
+    private val matchService: MatchService,
+    private val favoriteRepository: FavoriteRepository
 ):MatchRepository {
     override suspend fun getAllMatches(): List<ListItem> {
         val allMatches = matchService.getAllMatches().data
@@ -16,7 +17,9 @@ class MatchRepositoryImpl @Inject constructor(
 
         val list = sortedMatches.groupBy { it.to.i }.flatMap { (leagueId, matches) ->
             val headerItem = ListItem(data = matches.first(), listItemType = ListItemType.HEADER)
-            val matchItems = matches.map { ListItem(data = it, listItemType = ListItemType.MATCH) }
+            val matchItems = matches.map {
+                ListItem(data = it, listItemType = ListItemType.MATCH, favoriteRepository.isMatchFavorite(it.i))
+            }
             listOf(headerItem) + matchItems
         }
 

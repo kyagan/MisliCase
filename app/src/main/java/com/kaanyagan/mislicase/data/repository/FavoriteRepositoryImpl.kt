@@ -17,7 +17,8 @@ class FavoriteRepositoryImpl @Inject constructor(
         return favoriteDao.deleteFavorite(matchId)
     }
 
-    override suspend fun checkFavorite(i: Int): Int {
-        return favoriteDao.checkFavorite(i)
+    override suspend fun isMatchFavorite(dataId: Int): Boolean {
+        return favoriteDao.checkFavorite(dataId)
     }
+
 }
