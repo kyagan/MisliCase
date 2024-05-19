@@ -6,7 +6,7 @@ import com.kaanyagan.mislicase.data.api.model.Favorite
 import com.kaanyagan.mislicase.data.repository.FavoriteRepository
 import com.kaanyagan.mislicase.data.repository.LeagueAndMatchRepository
 import com.kaanyagan.mislicase.data.state.FavoriteMessageState
-import com.kaanyagan.mislicase.data.state.MatchListState
+import com.kaanyagan.mislicase.data.state.LeagueAndMatchListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +21,8 @@ class MainViewModel @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ): ViewModel(){
 
-    private val _matchListState:MutableStateFlow<MatchListState> = MutableStateFlow(MatchListState.Idle)
-    val matchListState:StateFlow<MatchListState> = _matchListState
+    private val _LeagueAnd_matchListState:MutableStateFlow<LeagueAndMatchListState> = MutableStateFlow(LeagueAndMatchListState.Idle)
+    val leagueAndMatchListState:StateFlow<LeagueAndMatchListState> = _LeagueAnd_matchListState
 
     private val _favoriteAddOrRemoveState: MutableSharedFlow<Int> = MutableSharedFlow()
     val favoriteAddOrRemoveState: SharedFlow<Int> = _favoriteAddOrRemoveState
@@ -30,19 +30,19 @@ class MainViewModel @Inject constructor(
     private val _favoriteMessage: MutableStateFlow<FavoriteMessageState> = MutableStateFlow(FavoriteMessageState.Idle)
     val favoriteMessage: MutableStateFlow<FavoriteMessageState> = _favoriteMessage
 
-    fun getAllMatches(){
+    fun getAllLeaguesAndMatches(){
         viewModelScope.launch {
             runCatching {
-                _matchListState.value = MatchListState.Loading
+                _LeagueAnd_matchListState.value = LeagueAndMatchListState.Loading
                 val matches = leagueAndMatchRepository.getAllLeaguesAndMatches()
                 if (matches.isEmpty()){
-                    _matchListState.value = MatchListState.Empty
+                    _LeagueAnd_matchListState.value = LeagueAndMatchListState.Empty
                 }
                 else {
-                    _matchListState.value = MatchListState.Result(matches.toMutableList())
+                    _LeagueAnd_matchListState.value = LeagueAndMatchListState.Result(matches.toMutableList())
                 }
             }.onFailure {
-                _matchListState.value = MatchListState.Error(it)
+                _LeagueAnd_matchListState.value = LeagueAndMatchListState.Error(it)
             }
         }
     }
@@ -63,11 +63,11 @@ class MainViewModel @Inject constructor(
                     _favoriteMessage.value = FavoriteMessageState.Added
                 }
                 _favoriteAddOrRemoveState.emit(position)
-                if(_matchListState.value is MatchListState.Result){
-                    (_matchListState.value as MatchListState.Result).matches[position].isFavorite = isFavorite
+                if(_LeagueAnd_matchListState.value is LeagueAndMatchListState.Result){
+                    (_LeagueAnd_matchListState.value as LeagueAndMatchListState.Result).matches[position].isFavorite = isFavorite
                 }
             }.onFailure {
-                _matchListState.value = MatchListState.Error(it)
+                _LeagueAnd_matchListState.value = LeagueAndMatchListState.Error(it)
             }
         }
     }

@@ -13,7 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.kaanyagan.mislicase.R
 import com.kaanyagan.mislicase.data.state.FavoriteMessageState
-import com.kaanyagan.mislicase.data.state.MatchListState
+import com.kaanyagan.mislicase.data.state.LeagueAndMatchListState
 import com.kaanyagan.mislicase.databinding.ActivityMainBinding
 import com.kaanyagan.mislicase.ui.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,8 +31,8 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getAllMatches()
-        observeMatchListState()
+        viewModel.getAllLeaguesAndMatches()
+        observeLeagueAndMatchListState()
         observeAddOrRemoveFavoriteState()
         observeFavoriteMessageState()
     }
@@ -58,21 +58,21 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    private fun observeMatchListState() {
+    private fun observeLeagueAndMatchListState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED){
-                viewModel.matchListState.collect{
+                viewModel.leagueAndMatchListState.collect{
                     when(it){
-                        is MatchListState.Idle->{}
-                        is MatchListState.Loading->{
+                        is LeagueAndMatchListState.Idle->{}
+                        is LeagueAndMatchListState.Loading->{
                             binding.rvMatch.isVisible = false
                             binding.progressBar.isVisible = true
                         }
-                        is MatchListState.Empty->{
+                        is LeagueAndMatchListState.Empty->{
                             binding.progressBar.isVisible = false
                             binding.tvEl.isVisible = true
                         }
-                        is MatchListState.Result->{
+                        is LeagueAndMatchListState.Result->{
                             binding.rvMatch.isVisible = true
                             binding.progressBar.isVisible = false
                             adapter = LeagueAndMatchAdapter(this@MainActivity, it.matches , this@MainActivity::onFavClick){ match, position->
@@ -82,7 +82,7 @@ class MainActivity: AppCompatActivity() {
                             }
                             binding.rvMatch.adapter = adapter
                         }
-                        is MatchListState.Error->{
+                        is LeagueAndMatchListState.Error->{
                             binding.rvMatch.isVisible = false
                             binding.progressBar.isVisible = false
                             Snackbar.make(binding.rvMatch,getString(R.string.error), Snackbar.LENGTH_LONG).show()
