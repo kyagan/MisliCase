@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kaanyagan.mislicase.data.api.model.Favorite
 import com.kaanyagan.mislicase.data.repository.FavoriteRepository
-import com.kaanyagan.mislicase.data.repository.MatchRepository
+import com.kaanyagan.mislicase.data.repository.LeagueAndMatchRepository
 import com.kaanyagan.mislicase.data.state.FavoriteMessageState
 import com.kaanyagan.mislicase.data.state.MatchListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val matchRepository: MatchRepository,
+    private val leagueAndMatchRepository: LeagueAndMatchRepository,
     private val favoriteRepository: FavoriteRepository
 ): ViewModel(){
 
@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 _matchListState.value = MatchListState.Loading
-                val matches = matchRepository.getAllMatches()
+                val matches = leagueAndMatchRepository.getAllLeaguesAndMatches()
                 if (matches.isEmpty()){
                     _matchListState.value = MatchListState.Empty
                 }

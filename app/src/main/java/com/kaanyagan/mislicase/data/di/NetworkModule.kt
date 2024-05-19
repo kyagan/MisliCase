@@ -1,7 +1,7 @@
 package com.kaanyagan.mislicase.data.di
 
 import com.kaanyagan.mislicase.Constants
-import com.kaanyagan.mislicase.data.api.service.MatchService
+import com.kaanyagan.mislicase.data.api.service.LeagueAndMatchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +21,6 @@ object NetworkModule {
 
 
     @Provides
-    fun provideMatchService(retrofit: Retrofit): MatchService = retrofit.create(MatchService::class.java)
+    fun provideMatchService(retrofit: Retrofit): LeagueAndMatchService = retrofit.create(LeagueAndMatchService::class.java)
 
 }

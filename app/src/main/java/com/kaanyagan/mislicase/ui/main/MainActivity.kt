@@ -24,7 +24,7 @@ class MainActivity: AppCompatActivity() {
 
     private val viewModel:MainViewModel by viewModels()
     private lateinit var binding:ActivityMainBinding
-    lateinit var adapter:MatchAdapter
+    lateinit var adapter:LeagueAndMatchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +75,7 @@ class MainActivity: AppCompatActivity() {
                         is MatchListState.Result->{
                             binding.rvMatch.isVisible = true
                             binding.progressBar.isVisible = false
-                            adapter = MatchAdapter(this@MainActivity, it.matches , this@MainActivity::onFavClick){match,position->
+                            adapter = LeagueAndMatchAdapter(this@MainActivity, it.matches , this@MainActivity::onFavClick){ match, position->
                                 val intent = Intent(this@MainActivity,DetailActivity::class.java)
                                 intent.putExtra("match_detail",match as Parcelable)
                                 startActivity(intent)

@@ -1,17 +1,16 @@
 package com.kaanyagan.mislicase.data.repository
 
-import com.kaanyagan.mislicase.data.api.model.Data
 import com.kaanyagan.mislicase.data.api.model.ListItem
 import com.kaanyagan.mislicase.data.api.model.ListItemType
-import com.kaanyagan.mislicase.data.api.service.MatchService
+import com.kaanyagan.mislicase.data.api.service.LeagueAndMatchService
 import javax.inject.Inject
 
-class MatchRepositoryImpl @Inject constructor(
-    private val matchService: MatchService,
+class LeagueAndMatchRepositoryImpl @Inject constructor(
+    private val leagueAndMatchService: LeagueAndMatchService,
     private val favoriteRepository: FavoriteRepository
-):MatchRepository {
-    override suspend fun getAllMatches(): List<ListItem> {
-        val allMatches = matchService.getAllMatches().data
+):LeagueAndMatchRepository {
+    override suspend fun getAllLeaguesAndMatches(): List<ListItem> {
+        val allMatches = leagueAndMatchService.getAllMatches().data
         val filteredMatches = allMatches.filter { it.sc.st == 5 }
         val sortedMatches = filteredMatches.sortedWith(compareBy({ it.to.sn }, { it.d }))
 

@@ -7,15 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.kaanyagan.mislicase.R
-import com.kaanyagan.mislicase.data.AppDatabase
 import com.kaanyagan.mislicase.data.api.model.Data
 import com.kaanyagan.mislicase.data.api.model.ListItem
 import com.kaanyagan.mislicase.data.api.model.ListItemType
-import com.kaanyagan.mislicase.data.repository.FavoriteRepository
 import com.kaanyagan.mislicase.databinding.LeagueListItemBinding
 import com.kaanyagan.mislicase.databinding.MatchListItemBinding
 
-class MatchAdapter(
+class LeagueAndMatchAdapter(
     private val context: Context,
     private val matches:List<ListItem>,
     private val onFavClick:(matchId: Int, position:Int)->Unit,

@@ -1,7 +1,7 @@
 package com.kaanyagan.mislicase.data.di
 
-import com.kaanyagan.mislicase.data.repository.MatchRepository
-import com.kaanyagan.mislicase.data.repository.MatchRepositoryImpl
+import com.kaanyagan.mislicase.data.repository.LeagueAndMatchRepository
+import com.kaanyagan.mislicase.data.repository.LeagueAndMatchRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,5 +13,5 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
     @Provides
-    fun provideMatchRepository(matchRepositoryImpl: MatchRepositoryImpl): MatchRepository = matchRepositoryImpl
+    fun provideMatchRepository(matchRepositoryImpl: LeagueAndMatchRepositoryImpl): LeagueAndMatchRepository = matchRepositoryImpl
 }
