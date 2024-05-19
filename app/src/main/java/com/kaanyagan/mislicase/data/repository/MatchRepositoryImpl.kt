@@ -16,11 +16,11 @@ class MatchRepositoryImpl @Inject constructor(
         val sortedMatches = filteredMatches.sortedWith(compareBy({ it.to.sn }, { it.d }))
 
         val list = sortedMatches.groupBy { it.to.i }.flatMap { (leagueId, matches) ->
-            val headerItem = ListItem(data = matches.first(), listItemType = ListItemType.HEADER)
+            val leagueItem = ListItem(data = matches.first(), listItemType = ListItemType.LEAGUE)
             val matchItems = matches.map {
                 ListItem(data = it, listItemType = ListItemType.MATCH, favoriteRepository.isMatchFavorite(it.i))
             }
-            listOf(headerItem) + matchItems
+            listOf(leagueItem) + matchItems
         }
 
         return list
