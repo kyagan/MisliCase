@@ -2,6 +2,13 @@ About The Project
 -------------
 This android project is a project where football match results are displayed on the screen by accessing Misli API using Kotlin language.
 
+Features
+-------------
+- Viewing the results of all matches in the leagues
+- Grouping matches by leagues
+- Adding and removing matches to favorites
+- Viewing match details
+
 Tech stack & Open-source libraries
 -------------
 - Minimum SDK level 24
@@ -15,8 +22,8 @@ Tech stack & Open-source libraries
 - Architecture
   - MVVM Architecture (View - ViewModel - Model)
   - Repository Pattern
-- Retrofit2: Construct the REST APIs and paging network data.
-- Coil: An image loading library for Android backed by Kotlin Coroutines.
+- Retrofit2: Construct the REST APIs and listing, grouping, paging network data.
+- Coil: An image loading library for Android
 
 
 Screenshots
