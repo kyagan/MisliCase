@@ -7,6 +7,6 @@ sealed class MatchListState{
     object Idle : MatchListState()
     object Loading : MatchListState()
     object Empty : MatchListState()
-    class Result(val matches: List<ListItem>) : MatchListState()
+    class Result(val matches: MutableList<ListItem>) : MatchListState()
     class Error(val throwable: Throwable? = null) : MatchListState()
 }

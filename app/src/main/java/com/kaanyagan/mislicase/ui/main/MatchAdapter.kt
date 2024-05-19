@@ -18,7 +18,7 @@ import com.kaanyagan.mislicase.databinding.MatchListItemBinding
 class MatchAdapter(
     private val context: Context,
     private val matches:List<ListItem>,
-    private val onFavClick:(i: Int)->Unit,
+    private val onFavClick:(i: Int, position:Int)->Unit,
     private val onClick:(data: Data, position:Int) -> Unit): RecyclerView.Adapter<ViewHolder>() {
 
     class MatchViewHolder(binding:MatchListItemBinding):ViewHolder(binding.root) {
@@ -70,7 +70,7 @@ class MatchAdapter(
                     onClick(data,position)
                 }
                 holder.ivFavorite.setOnClickListener {
-                    onFavClick(data.i)
+                    onFavClick(data.i,position)
                     return@setOnClickListener
                 }
             }

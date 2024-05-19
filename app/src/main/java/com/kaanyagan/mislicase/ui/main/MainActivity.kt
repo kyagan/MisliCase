@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.kaanyagan.mislicase.R
-import com.kaanyagan.mislicase.data.state.FavoriteAddOrRemoveState
+import com.kaanyagan.mislicase.data.state.FavoriteMessageState
 import com.kaanyagan.mislicase.data.state.MatchListState
 import com.kaanyagan.mislicase.databinding.ActivityMainBinding
 import com.kaanyagan.mislicase.ui.detail.DetailActivity
@@ -34,6 +34,28 @@ class MainActivity: AppCompatActivity() {
         viewModel.getAllMatches()
         observeMatchListState()
         observeAddOrRemoveFavoriteState()
+        observeFavoriteMessageState()
+    }
+
+    private fun observeFavoriteMessageState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.favoriteMessage.collect{
+                    when(it){
+                        is FavoriteMessageState.Idle->{}
+                        is FavoriteMessageState.Added->{
+                            Toast.makeText(this@MainActivity,getString(R.string.added_favorite),Toast.LENGTH_SHORT).show()
+                        }
+                        is FavoriteMessageState.Removed->{
+                            Toast.makeText(this@MainActivity,getString(R.string.removed_favorite),Toast.LENGTH_SHORT).show()
+                        }
+                        is FavoriteMessageState.Error->{
+                            Toast.makeText(this@MainActivity,getString(R.string.removed_favorite),Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun observeMatchListState() {
@@ -71,26 +93,15 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-    private fun onFavClick(i: Int) {
-        viewModel.addOrRemoveFavorite(i)
+    private fun onFavClick(i: Int, position: Int) {
+        viewModel.addOrRemoveFavorite(i,position)
     }
 
     private fun observeAddOrRemoveFavoriteState() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED){
                 viewModel.favoriteAddOrRemoveState.collect{
-                    when(it){
-                        is FavoriteAddOrRemoveState.Idle->{}
-                        is FavoriteAddOrRemoveState.Loading->{}
-                        is FavoriteAddOrRemoveState.Add->{
-                            Toast.makeText(this@MainActivity,getString(R.string.added_favorite),Toast.LENGTH_SHORT).show()
-                        }
-                        is FavoriteAddOrRemoveState.Remove->{
-                            Toast.makeText(this@MainActivity,getString(R.string.removed_favorite),Toast.LENGTH_SHORT).show()
-
-                        }
-                        is FavoriteAddOrRemoveState.Error->{}
-                    }
+                    adapter.notifyItemChanged(it)
                 }
             }
         }
